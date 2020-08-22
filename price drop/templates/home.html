@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>email sending </title>
+    </head>
+
+    <body>
+            
+        {% with messages = get_flashed_messages() %}
+           {% if messages %}
+              {% for message in messages %}
+                 {{ message }}
+              {% endfor %}
+           {% endif %}
+        {% endwith %}
+
+        <!-- Website Title -->
+    	<div class="box">
+            <h2 class='box-heading'><span class="heading_font">email sending</span></h2>
+            <div class='description'>
+    			<p>email sending</p>
+    		</div>
+    	</div>
+
+        <!-- Text Area -->
+    	<div class="ml-box">
+    		<form action="{{ url_for('login') }}" method="POST">
+    <label for="user">name</label>
+                <input class="form-input" type="text" name="user" placeholder="enter name" ><br>
+	<label for="mail_id">mail id</label>
+                <input class="form-input" type="text" name="mail_id" placeholder="enter mail id" ><br>
+    <label for="url">url</label>
+                <input class="form-input" type="text" name="url" placeholder="enter url" ><br>
+	<label for="price">price</label>
+                <input class="form-input" type="text" name="price" placeholder="enter desired price" ><br>
+
+                  <div class="row">
+    		<input type="submit" value="Submit">
+	  </div>
+
+        		
+        	</form>
+    	</div>
+
+
+	</div>
+    </body>
+</html>
+
+

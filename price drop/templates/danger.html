@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>email sending </title>
+    </head>
+
+    <body>
+        {% with messages = get_flashed_messages() %}
+           {% if messages %}
+              {% for message in messages %}
+                 {{ message }}
+              {% endfor %}
+           {% endif %}
+        {% endwith %}
+
+        <!-- Website Title -->
+    	<div class="box">
+            <h2 class='box-heading'><span class="heading_font">ERROR</span></h2>
+
+    	</div>
+
+    </body>
+</html>
