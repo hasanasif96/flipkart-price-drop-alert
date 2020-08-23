@@ -22,6 +22,6 @@ def alert_gen():
 
 sched = BackgroundScheduler(daemon=True)
   
-sched.add_job(alert_gen,'interval', minutes=3)
+sched.add_job(alert_gen,'interval', minutes=30)
  
 sched.start()
