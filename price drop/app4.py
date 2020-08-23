@@ -22,8 +22,7 @@ sched = BackgroundScheduler(daemon=True)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://b3543651e1d610:038afb89@us-cdbr-east-02.cleardb.com/heroku_9f363e97731959a'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"]= False
-app.config['SQLALCHEMY_POOL_RECYCLE'] = 499
-app.config['SQLALCHEMY_POOL_TIMEOUT'] = 20
+
 app.secret_key = 'hello'
 db = SQLAlchemy(app)
 
@@ -61,64 +60,21 @@ def login():
     else:
         return render_template("home.html")   
 
-
-###getting data fro database 
+users = Users.query.all()
 def alert_gen():
-    users = Users.query.all()
-    url=[]
-    price=[]
-    mail=[]
-    name=[]
-    print(url,name)
-    for user in users:
-        url.append(user.url)
-        price.append(user.user_price)
-        mail.append(user.email)
-        name.append(user.username)
-    for i in range(0,len(url)):
-        try:
-            if scrape(url[i])<price[i]:
-                send_mails(mail[i],name[i],url[i])
-            else:
+    for i in users:
+            try:
+                if scrape(i.url)<i.user_price:
+                    send_mails(i.email,i.username)
+                else:
+                    continue
+            except:
                 continue
-        except:
-            continue
+
     
-sched.add_job(alert_gen,'interval', minutes=2)
+sched.add_job(alert_gen,'interval', minutes=5)
  
 sched.start()
-   
-    
-#users = Users.query.all()
-#url=[]
-#price=[]
-#mail=[]
-#name=[]
-#for user in users:
-#    url.append(user.url)
-#    price.append(user.user_price)
-#    mail.append(user.email)
-#    name.append(user.username)
-
-#    new_price=[]
-#    page=requests.get(user.url)
-#    soup=BeautifulSoup(page.text,"html.parser")
-#    price_text=soup.find_all(class_="a-size-medium a-color-price priceBlockBuyingPriceString")
-#    for item in price_text:
-#        new_price.append(item.text)
-#    new_price = re.findall(r'\d+', new_price[0])
-#    new_price.pop()
-#    new_price="".join(new_price)
-#    new_price=int(new_price)
-#    if user.user_price<new_price:
-#        send_mails(user.email,user.username)
-#    else:
-#        continue
-
-#    if scrape(url)< price:
-#        send_mails(user.email,user.username)
-#    else:
-#        continue
         
 
 if __name__ == "__main__":
