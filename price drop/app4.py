@@ -8,16 +8,11 @@ Created on Fri Aug 14 15:37:12 2020
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from validate import validator
-#from apscheduler.schedulers.blocking import BlockingScheduler
-from apscheduler.schedulers.background import BackgroundScheduler
 
-from scraper import scrape
-from mail import send_mails
 
-#sched = BackgroundScheduler(daemon=True)
+
 
 app = Flask(__name__)
-sched = BackgroundScheduler(daemon=True)
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://b3543651e1d610:038afb89@us-cdbr-east-02.cleardb.com/heroku_9f363e97731959a'
@@ -60,21 +55,6 @@ def login():
     else:
         return render_template("home.html")   
 
-users = Users.query.all()
-def alert_gen():
-    for i in users:
-            try:
-                if scrape(i.url)<i.user_price:
-                    send_mails(i.email,i.username)
-                else:
-                    continue
-            except:
-                continue
-
-    
-sched.add_job(alert_gen,'interval', minutes=5)
- 
-sched.start()
         
 
 if __name__ == "__main__":
