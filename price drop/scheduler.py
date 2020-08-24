@@ -14,7 +14,7 @@ def alert_gen():
     for i in users:
             try:
                 if scrape(i.url)<i.user_price:
-                    send_mails(i.email,i.username)
+                    send_mails(i.email,i.username,i.url)
                 else:
                     continue
             except:
