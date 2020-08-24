@@ -20,8 +20,8 @@ def alert_gen():
             except:
                 continue
 
-sched = BackgroundScheduler(daemon=True)
+sched = BackgroundScheduler(daemon=False)
   
-sched.add_job(alert_gen,'interval', minutes=30)
+sched.add_job(alert_gen,'interval', minutes=3)
  
 sched.start()
