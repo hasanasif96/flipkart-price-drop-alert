@@ -27,25 +27,19 @@ def alert_gens():
 #sched.start()
 
 
-from apscheduler.schedulers.blocking import BlockingScheduler
-
-sched = BlockingScheduler()
-
-@sched.scheduled_job('interval', minutes=3)
 def alert_gen():
     users = Users.query.all()
     for i in users:
             try:
                 if scrape(i.url)<i.user_price:
-                    send_mails(i.email,i.username,i.url)
+                    send_mails(i.email,i.username)
                 else:
                     continue
             except:
                 continue
 
+if __name__ == '__main__':
+    from apscheduler.schedulers.background import BackgroundScheduler
+    sched = BackgroundScheduler()
+    sched.add_job(alert_gen,'interval', minutes=5)
 sched.start()
-#if __name__ == '__main__':
-#    from apscheduler.schedulers.background import BackgroundScheduler
-#    sched = BackgroundScheduler()
-#    sched.add_job(alert_gen,'interval', minutes=5)
-#sched.start()
