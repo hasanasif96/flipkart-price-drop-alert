@@ -25,3 +25,10 @@ sched = BackgroundScheduler(daemon=False)
 sched.add_job(alert_gen,'interval', minutes=3)
  
 sched.start()
+
+
+#if __name__ == '__main__':
+#    from apscheduler.schedulers.background import BackgroundScheduler
+#    sched = BackgroundScheduler()
+#    sched.add_job(alert_gen,'interval', minutes=5)
+#sched.start()
