@@ -11,8 +11,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 def send_mails(email,name):
-    email_password = 'mrlonely@567'
-    email_user = 'sahab.qwwnd@gmail.com'
+    email_password = '********'
+    email_user = 'xyz@gmail.com'
     subject = 'alert'
 
     msg = MIMEMultipart()
@@ -34,24 +34,3 @@ def send_mails(email,name):
     
     
     
-def send_price_low_mail(email,name):
-    email_password = 'Mrlonely@56'
-    email_user = 'sahab.qwwnd@gmail.com'
-    subject = 'Price drop Alert'
-
-    msg = MIMEMultipart()
-    msg['From'] = email_user
-    msg['To'] = email
-    msg['Subject'] = subject
-
-    body = f'Hi {name}. This mail is to inform you that your desired price is not reached but there is a drop in price.plz have a look.'
-    msg.attach(MIMEText(body,'plain'))
-
-    text = msg.as_string()
-    server = smtplib.SMTP('smtp.gmail.com',587)
-    server.starttls()
-    server.login(email_user,email_password)
-
-
-    server.sendmail(email_user,email,text)
-    server.quit()
